@@ -1,0 +1,13 @@
+homeassistant:
+    image: homeassistant/home-assistant
+    container_name: homeassistant
+    environment:
+        - TZ=America/Vancouver
+    network_mode: host
+    ports:
+      - "8123:8123"
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
