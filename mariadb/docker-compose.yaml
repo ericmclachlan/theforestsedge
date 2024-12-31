@@ -1,0 +1,26 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    env_file:
+      - ../.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD} # Change this to a strong root password
+      MYSQL_DATABASE: ${MARIADB_DATABASE}     # Optional: specify a default database
+      MYSQL_USER: ${MARIADB_USER}                  # Optional: specify a user
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}          # Optional: specify the user's password
+    ports:
+      - "3306:3306"  # Exposes MariaDB on the host machine at port 3306
+    volumes:
+      - mariadb_data:/var/lib/mysql  # Persistent data storage
+    networks:
+      - app_network
+
+volumes:
+  mariadb_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge
