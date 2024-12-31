@@ -1,13 +1,12 @@
-homeassistant:
-    image: homeassistant/home-assistant
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
     environment:
-        - TZ=America/Vancouver
+      - TZ=America/Vancouver
     network_mode: host
-    ports:
-      - "8123:8123"
-    privileged: true
+    privileged: true  # Required for Bluetooth access
     restart: unless-stopped
     volumes:
       - ./config:/config
-      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus  # Add this line for D-Bus support
