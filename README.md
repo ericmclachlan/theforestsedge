@@ -2,7 +2,10 @@
 
 A configuration for our home server.
 
-## Installing Docker
+### Prerequisites
+
+
+## Docker
 
 ```bash
 sudo apt update
@@ -20,18 +23,7 @@ sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-
-# Docker Compose
-
-```bash
-apk add docker-compose
-```
-
-## Usage
-
-```bash
-docker compose up -d
-```
+You can check the installation with `docker --version` and `docker compose --version`.
 
 ## Flashing the SD Card with the WIFI details.
 
