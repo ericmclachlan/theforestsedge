@@ -1,22 +1,53 @@
 services:
   photoprism:
-    image: photoprism/photoprism:arm64
-    platform: "linux/arm64"
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    restart: always
+    environment:
+      PHOTOPRISM_SITE_URL: "http://localhost:2342"
+      PHOTOPRISM_ADMIN_USER: admin
+      PHOTOPRISM_ADMIN_PASSWORD: c@TCK8z93N_auBch
+      PHOTOPRISM_DATABASE_DRIVER: "mysql"
+      PHOTOPRISM_DATABASE_SERVER: "mariadb:3306"
+      PHOTOPRISM_DATABASE_NAME: photoprism
+      PHOTOPRISM_DATABASE_USER: photoprism_user
+      PHOTOPRISM_DATABASE_PASSWORD: 7_3*RN3fQRDNvKyw
+      PHOTOPRISM_ORIGINALS_PATH: "/photoprism/originals"
+      PHOTOPRISM_IMPORT_PATH: "/photoprism/import"
+      PHOTOPRISM_STORAGE_PATH: "/photoprism/storage"
     ports:
       - "2342:2342"
-    environment:
-      PHOTOPRISM_DATABASE_DRIVER: "mysql"
-      PHOTOPRISM_DATABASE_SERVER: "addon_core_mariadb:3306"
-      PHOTOPRISM_DATABASE_NAME: "photoprism"
-      PHOTOPRISM_DATABASE_USER: "photoprism"
-      PHOTOPRISM_DATABASE_PASSWORD: "your_password"
-      PHOTOPRISM_ADMIN_USER: "admin"
-      PHOTOPRISM_ADMIN_PASSWORD: "admin_password"
     volumes:
-      - "/mnt/data/supervisor/media:/photoprism/originals"  # Example
+      - /mnt/raid/media/photos:/photoprism/originals
+      - /mnt/raid/media/import:/photoprism/import
+      - photoprism_storage:/photoprism/storage
+    depends_on:
+      - mariadb
     networks:
-      - hassio
-networks:
-  hassio:
-    external: true
+      - app_network
 
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ZuLgWkhWXBLy7UPcU9Ty
+      MYSQL_DATABASE: photoprism
+      MYSQL_USER: photoprism_user
+      MYSQL_PASSWORD: 7_3*RN3fQRDNvKyw
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app_network
+
+volumes:
+  mariadb_data:
+    driver: local
+  photoprism_storage:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge

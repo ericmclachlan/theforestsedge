@@ -1,0 +1,6 @@
+tunnel: theforestsedge_homeassistant
+credentials-file: /etc/cloudflared/theforestsedge_homeassistant.json
+ingress:
+  - hostname: theforestsedge.ca
+    service: http://nginx:80
+  - service: http_status:404
