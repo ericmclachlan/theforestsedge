@@ -1,3 +1,4 @@
 .env
 nginx/nginx/logs/*
 nextcloud/logs/*
+homeassistant/config/*
