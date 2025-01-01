@@ -1,0 +1,19 @@
+services:
+  samba:
+    image: dperson/samba:latest
+    container_name: samba
+    restart: unless-stopped
+    environment:
+      - TZ=America/Vancouver
+    ports:
+      - "137:137/udp"  # NetBIOS name service
+      - "138:138/udp"  # NetBIOS datagram service
+      - "139:139/tcp"  # NetBIOS session service
+      - "445:445/tcp"  # SMB over TCP
+    volumes:
+      - ./samba-config:/etc/samba
+      - /mnt/raid/archive/backups:/mnt/backups  # Shared folder
+      #-u "username;password"  # Replace with your Samba username and password
+      #-s "share_name;/path/to/share;is_browseable;read_only;guest_ok;valid_users"
+    command: >
+      -s "backups;/mnt/raid/archive/backups;yes;no;yes;all"
