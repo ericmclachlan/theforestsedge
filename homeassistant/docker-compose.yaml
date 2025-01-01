@@ -9,4 +9,5 @@ services:
     restart: unless-stopped
     volumes:
       - ./config:/config
-      - /run/dbus:/run/dbus  # Add this line for D-Bus support
+      - /run/dbus:/run/dbus  # For D-Bus support
+      - /mnt/raid/backups/homeassistant:/config/backups  # Map the actual backups folder
