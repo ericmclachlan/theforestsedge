@@ -1,1 +1,15 @@
-[]
+- id: '1735776847693'
+  alias: Weekly Backup
+  description: Automation to create regular backups of our Home Assistant configuration.
+  triggers:
+  - trigger: time
+    at: 02:00:00
+  conditions:
+  - condition: time
+    weekday:
+    - sun
+  actions:
+  - action: backup.create
+    metadata: {}
+    data: {}
+  mode: single
