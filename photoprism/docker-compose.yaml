@@ -1,6 +1,9 @@
 services:
   photoprism:
-    image: photoprism/photoprism:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #image: photoprism/photoprism:latest
     container_name: photoprism
     restart: always
     environment:
