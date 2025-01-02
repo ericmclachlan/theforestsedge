@@ -12,8 +12,10 @@ services:
       - "445:445/tcp"  # SMB over TCP
     volumes:
       - ./samba-config:/etc/samba
-      - /mnt/raid/backups:/mnt/backups  # Shared folder
+      - /mnt/raid/backups:/mnt/backups
+      - /mnt/raid/documents:/mnt/documents
       #-u "username;password"  # Replace with your Samba username and password
       #-s "share_name;/path/to/share;is_browseable;read_only;guest_ok;valid_users"
     command: >
       -s "backups;/mnt/backups;yes;no;yes;all"
+      -s "documents;/mnt/documents;yes;no;yes;all"
