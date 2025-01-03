@@ -5,17 +5,16 @@ services:
     restart: unless-stopped
     environment:
       - TZ=America/Vancouver
+    privileged: true  # Required for Bluetooth access
     ports:
       - "137:137/udp"  # NetBIOS name service
       - "138:138/udp"  # NetBIOS datagram service
       - "139:139/tcp"  # NetBIOS session service
       - "445:445/tcp"  # SMB over TCP
     volumes:
-      - ./samba-config:/etc/samba
+      - ./smb.conf:/etc/samba/smb.conf
       - /mnt/raid/backups:/mnt/backups
       - /mnt/raid/documents:/mnt/documents
-      #-u "username;password"  # Replace with your Samba username and password
-      #-s "share_name;/path/to/share;is_browseable;read_only;guest_ok;valid_users"
+      - /mnt/raid/media:/mnt/media
     command: >
-      -s "backups;/mnt/backups;yes;no;yes;all"
-      -s "documents;/mnt/documents;yes;no;yes;all"
+      -u "samba-user;86C*HzLTnw"
