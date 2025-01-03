@@ -8,6 +8,6 @@ services:
     privileged: true  # Required for Bluetooth access
     restart: unless-stopped
     volumes:
-      - ./config:/config
+      - /mnt/raid/apps/homeassistant/config:/config
       - /run/dbus:/run/dbus  # For D-Bus support
       - /mnt/raid/backups/homeassistant:/config/backups  # Map the actual backups folder
