@@ -1,0 +1,17 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    # Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - "8096:8096"  # Jellyfin default web UI and API port
+      #- "8920:8920"  # HTTPS (optional, requires manual configuration in Jellyfin)
+    volumes:
+      - /mnt/raid/apps/jellyfin/config:/config
+      - /mnt/raid/apps/jellyfin/cache:/cache
+      - type: bind
+        source: /mnt/raid/media
+        target: /media
+    restart: 'unless-stopped'
